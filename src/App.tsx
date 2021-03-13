@@ -1,6 +1,9 @@
 import React, { Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "./components/Navbar";
+import Check from "./components/Check";
+import Form from "./components/Form";
+import UserData from "./components/UserData";
 
 const Container = styled.div`
   background-color: white;
@@ -8,11 +11,23 @@ const Container = styled.div`
 
 function App(): JSX.Element {
   return (
-    <Container data-testid="app">
-      <Suspense fallback="loading">
-        <Navbar />
-      </Suspense>
-    </Container>
+    <Suspense fallback="loading">
+      <Container data-testid="app">
+        <Router>
+          <Switch>
+            <Route path="/">
+              <Form />
+            </Route>
+            <Route path="/user-data">
+              <UserData />
+            </Route>
+            <Route path="/check">
+              <Check />
+            </Route>
+          </Switch>
+        </Router>
+      </Container>
+    </Suspense>
   );
 }
 

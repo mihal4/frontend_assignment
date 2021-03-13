@@ -1,0 +1,222 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import Navbar from "./Navbar";
+import Stepper from "./Stepper";
+import Wallet from "./assets/wallet.svg";
+import Pet from "./assets/pet.svg";
+import Dropdown from "./assets/dropdown.svg";
+
+const Container = styled.div`
+  max-width: 1000px;
+  margin: 80px auto;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const InfoContainer = styled.div`
+  max-width: 557px;
+`;
+
+const Title = styled.h1`
+  max-width: 552px;
+  font-size: 46px;
+`;
+
+const GroupContainer = styled.div`
+  max-width: 557px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: #faf9f9;
+  border-radius: 24px;
+`;
+
+const GroupName = styled.p`
+  font-size: 16px;
+  color: grey;
+  max-width: 200px;
+`;
+
+const ActiveGroupName = styled.p`
+  font-size: 16px;
+  color: white;
+  max-width: 200px;
+`;
+
+const Group = styled.div`
+  background: background: #faf9f9;
+  padding: 25px;
+  border-radius: 24px 0px 0px 24px;
+  flex: 1;
+  border: 1px solid #cd8b65;
+`;
+
+const ActiveGroup = styled.div`
+  background: linear-gradient(180deg, #cd8b65 0%, #bb6b3d 100%);
+  padding: 25px;
+  border-radius: 0px 24px 24px 0px;
+  flex: 1;
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
+    0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
+    0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275),
+    0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035),
+    0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+`;
+
+const ShelterContainer = styled.div`
+  max-width: 557px;
+  margin-top: 58px;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ChooseTitle = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+`;
+
+const Select = styled.div`
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 16px 24px 16px 24px;
+  height: 74px;
+  margin-top: 5px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Placeholder = styled.p`
+  font-size: 16px;
+  color: grey;
+  margin: 0;
+`;
+
+const Info = styled.p`
+  margin-bottom: 8px;
+  font-size: 14px;
+`;
+
+const AmountBox = styled.div`
+  height: 53px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-right: 7px;
+`;
+
+const AmountContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+`;
+
+const Input = styled.input`
+  width: 33px;
+  border: none;
+  border-bottom: 1px solid #c9c9c9;
+  outline: none;
+`;
+
+const FlexEndContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  max-width: 557px;
+`;
+
+const ContinueButton = styled.button`
+  width: 124px;
+  height: 59px;
+  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
+    0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
+    0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275),
+    0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035),
+    0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+  border-radius: 100px;
+  border: none;
+  margin-top: 72px;
+`;
+
+const ButtonText = styled.p`
+  margin: 0;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+`;
+
+function Form(): JSX.Element {
+  const { t } = useTranslation();
+
+  const amounts: number[] = [5, 10, 20, 30, 50, 100];
+
+  const amountBlock = amounts.map((amount, index) => (
+    <AmountBox key={index}>
+      <ChooseTitle>{amount} €</ChooseTitle>
+    </AmountBox>
+  ));
+
+  return (
+    <div>
+      <Navbar />
+      <Container>
+        <InfoContainer>
+          <Stepper />
+          <Title>{t("formTitle")}</Title>
+          <GroupContainer>
+            <Group>
+              <img src={Wallet} />
+              <GroupName>{t("shelterTitle")}</GroupName>
+            </Group>
+            <ActiveGroup>
+              <img src={Pet} />
+              <ActiveGroupName>{t("foundationTitle")}</ActiveGroupName>
+            </ActiveGroup>
+          </GroupContainer>
+          <ShelterContainer>
+            <TitleContainer>
+              <ChooseTitle>{t("shelterChooseTitle")}</ChooseTitle>
+              <Info>{t("optional")}</Info>
+            </TitleContainer>
+            <Select>
+              <div>
+                <ChooseTitle>{t("shelter")}</ChooseTitle>
+                <Placeholder>{t("chooseChelter")}</Placeholder>
+              </div>
+              <img src={Dropdown} />
+            </Select>
+            <ChooseTitle>{t("amount")}</ChooseTitle>
+            <AmountContainer>
+              {amountBlock}
+              <AmountBox>
+                <ChooseTitle>
+                  <Input /> €
+                </ChooseTitle>
+              </AmountBox>
+            </AmountContainer>
+          </ShelterContainer>
+          <FlexEndContainer>
+            <ContinueButton>
+              <ButtonText>{t("continue")}</ButtonText>
+            </ContinueButton>
+          </FlexEndContainer>
+        </InfoContainer>
+      </Container>
+    </div>
+  );
+}
+
+export default Form;
