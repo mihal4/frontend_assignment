@@ -201,6 +201,7 @@ const ContinueButton = styled.button`
   border-radius: 100px;
   border: none;
   margin-top: 72px;
+  outline: none;
 `;
 
 const ButtonText = styled.p`
@@ -320,7 +321,7 @@ function Form(): JSX.Element {
       <Navbar />
       <Container>
         <InfoContainer>
-          <Stepper />
+          <Stepper currentStep={1} />
           <Title>{t("formTitle")}</Title>
           {helpType === "shelter" ? (
             <GroupContainer>
