@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import Wallet from "./assets/wallet.svg";
-import Pet from "./assets/pet.svg";
 import DropdownIcon from "./assets/dropdown.svg";
 
 const Container = styled.div`
@@ -44,18 +43,25 @@ const ActiveGroupName = styled.p`
   max-width: 200px;
 `;
 
-const Group = styled.div`
-  background: background: #faf9f9;
+const GroupShelter = styled.div`
+  background: ${(props) =>
+    props.accessKey === "shelter"
+      ? "linear-gradient(180deg, #cd8b65 0%, #bb6b3d 100%)"
+      : "#faf9f9"};
   padding: 25px;
   border-radius: 24px 0px 0px 24px;
   flex: 1;
   border: 1px solid #cd8b65;
 `;
 
-const ActiveGroup = styled.div`
-  background: linear-gradient(180deg, #cd8b65 0%, #bb6b3d 100%);
+const GroupFoundation = styled.div`
+  background: ${(props) =>
+    props.accessKey === "foundation"
+      ? "linear-gradient(180deg, #cd8b65 0%, #bb6b3d 100%)"
+      : "#faf9f9"};
   padding: 25px;
   border-radius: 0px 24px 24px 0px;
+  border: 1px solid #cd8b65;
   flex: 1;
   box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
     0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
@@ -192,6 +198,7 @@ function Form(): JSX.Element {
   const [choosedShelter, setChoosedShelter] = useState<string>(
     t("chooseChelter")
   );
+  const [helpType, setHelpType] = useState("foundation");
 
   const amounts: number[] = [5, 10, 20, 30, 50, 100];
 
@@ -251,20 +258,47 @@ function Form(): JSX.Element {
         <InfoContainer>
           <Stepper />
           <Title>{t("formTitle")}</Title>
-          <GroupContainer>
-            <Group>
-              <img src={Wallet} />
-              <GroupName>{t("shelterTitle")}</GroupName>
-            </Group>
-            <ActiveGroup>
-              <img src={Pet} />
-              <ActiveGroupName>{t("foundationTitle")}</ActiveGroupName>
-            </ActiveGroup>
-          </GroupContainer>
+          {helpType === "shelter" ? (
+            <GroupContainer>
+              <GroupShelter
+                accessKey={helpType}
+                onClick={() => setHelpType("shelter")}
+              >
+                <img src={Wallet} />
+                <ActiveGroupName>{t("shelterTitle")}</ActiveGroupName>
+              </GroupShelter>
+              <GroupFoundation
+                accessKey={helpType}
+                onClick={() => setHelpType("foundation")}
+              >
+                <img src={Wallet} />
+                <GroupName>{t("foundationTitle")}</GroupName>
+              </GroupFoundation>
+            </GroupContainer>
+          ) : (
+            <GroupContainer>
+              <GroupShelter
+                accessKey={helpType}
+                onClick={() => setHelpType("shelter")}
+              >
+                <img src={Wallet} />
+                <GroupName>{t("shelterTitle")}</GroupName>
+              </GroupShelter>
+              <GroupFoundation
+                accessKey={helpType}
+                onClick={() => setHelpType("foundation")}
+              >
+                <img src={Wallet} />
+                <ActiveGroupName>{t("foundationTitle")}</ActiveGroupName>
+              </GroupFoundation>
+            </GroupContainer>
+          )}
           <ShelterContainer>
             <TitleContainer>
               <ChooseTitle>{t("shelterChooseTitle")}</ChooseTitle>
-              <Info>{t("optional")}</Info>
+              <Info>
+                {t(helpType === "shelter" ? "mandatory" : "optional")}
+              </Info>
             </TitleContainer>
             <Select onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
               <div>
