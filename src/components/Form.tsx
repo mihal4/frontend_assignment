@@ -6,10 +6,12 @@ import Stepper from "./Stepper";
 import Wallet from "./assets/wallet.svg";
 import DropdownIcon from "./assets/dropdown.svg";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const Container = styled.div`
   max-width: 1000px;
   margin: 80px auto;
+  padding: 0 20px;
   display: flex;
   justify-content: flex-start;
 `;
@@ -137,6 +139,7 @@ const AmountBox = styled.div`
   box-sizing: border-box;
   border-radius: 8px;
   margin-right: 7px;
+  margin-bottom: 7px;
 `;
 
 const ActiveAmountBox = styled.div`
@@ -147,6 +150,7 @@ const ActiveAmountBox = styled.div`
   box-sizing: border-box;
   border-radius: 8px;
   margin-right: 7px;
+  margin-bottom: 7px;
 `;
 
 const ActiveAmountText = styled.p`
@@ -410,6 +414,7 @@ function Form(): JSX.Element {
           </FlexEndContainer>
         </InfoContainer>
       </Container>
+      <Footer />
     </div>
   );
 }

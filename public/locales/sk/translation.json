@@ -9,5 +9,9 @@
   "optional": "Nepovinné",
   "mandatory": "Povinné",
   "amount": "Suma, ktorou chcem prispieť",
-  "continue": "Pokračovať"
+  "continue": "Pokračovať",
+  "about": "O projekte",
+  "howTo": "Ako na to",
+  "contact": "Kontakt",
+  "loremIpsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
 }
