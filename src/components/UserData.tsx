@@ -34,7 +34,7 @@ const Text = styled.p`
 
 const InputContainer = styled.div`
   border: 1px solid
-    ${(props) => (props.accessKey === "" ? "#cd8b65" : "#dfdfdf")};
+    ${(props) => (props.accessKey === "" ? "#dfdfdf" : "#cd8b65")};
   box-sizing: border-box;
   border-radius: 8px;
   height: 74px;
@@ -162,6 +162,10 @@ function UserData(): JSX.Element {
     { code: "cz", name: "Česká republika", prefix: "+420" },
   ];
 
+  // eslint-disable-next-line
+  const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexPhone = "\\d{9}";
+
   const [choosedCountry, setPChoosedCountry] = useState<IFlag>(flags[0]);
 
   // eslint-disable-next-line
@@ -184,6 +188,14 @@ function UserData(): JSX.Element {
     setIsDropdownVisible(false);
   }
 
+  function handleCheckEmail(): string {
+    return eMail.match(regexEmail) ? "correct" : "";
+  }
+
+  function handleCheckPhone(): string {
+    return number.match(regexPhone) ? "correct" : "";
+  }
+
   const countries = flags.map((flag) => (
     <DrowpdownRow key={flag.code} onClick={() => handlePickCountry(flag)}>
       <Flag code={flag.code} style={{ width: 23 }} />
@@ -199,10 +211,12 @@ function UserData(): JSX.Element {
           <Stepper currentStep={2} />
           <Title>{t("userDataTitle")}</Title>
           <Text>{t("aboutYou")}</Text>
-          <InputContainer accessKey={firstName}>
+          <InputContainer accessKey="correct">
             <InputTitle>{t("name")}</InputTitle>
             <Input
               type="text"
+              minLength={2}
+              maxLength={20}
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder={t("namePlaceholder")}
@@ -212,12 +226,14 @@ function UserData(): JSX.Element {
             <InputTitle>{t("surname")}</InputTitle>
             <Input
               type="text"
+              minLength={2}
+              maxLength={30}
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
               placeholder={t("surnamePlaceholder")}
             />
           </InputContainer>
-          <InputContainer accessKey={eMail}>
+          <InputContainer accessKey={handleCheckEmail()}>
             <InputTitle>{t("eMail")}</InputTitle>
             <Input
               type="text"
@@ -226,7 +242,7 @@ function UserData(): JSX.Element {
               placeholder={t("eMailPlaceholder")}
             />
           </InputContainer>
-          <InputContainer accessKey={number}>
+          <InputContainer accessKey={handleCheckPhone()}>
             <InputTitle>{t("number")}</InputTitle>
             <NumberContainer>
               <FlagContainer
@@ -240,6 +256,7 @@ function UserData(): JSX.Element {
               )}
               <Input
                 type="text"
+                maxLength={9}
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
               />
