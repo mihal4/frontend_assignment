@@ -85,8 +85,9 @@ const ButtonsContainer = styled.div`
 const ButtonBack = styled.button`
   background: #f3e2d9;
   border-radius: 100px;
-  padding: 20px 24px;
   border: none;
+  padding: 20px 24px;
+  outline: none;
 `;
 
 const ButtonBackText = styled.p`
@@ -94,6 +95,20 @@ const ButtonBackText = styled.p`
   font-weight: 600;
   margin: 0;
   color: black;
+`;
+
+const ActiveButtonContinue = styled.button`
+  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
+    0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
+    0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275),
+    0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035),
+    0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+  border-radius: 100px;
+  border: none;
+  padding: 20px 24px;
+  outline: none;
 `;
 
 const ButtonContinue = styled.button`
@@ -188,6 +203,20 @@ function UserData(): JSX.Element {
     setIsDropdownVisible(false);
   }
 
+  function handleCheckName(): string {
+    if (firstName.length === 0) {
+      return "correct";
+    } else if (firstName.length < 2) {
+      return "";
+    } else {
+      return "correct";
+    }
+  }
+
+  function handleCheckSurname(): string {
+    return surname.length > 1 ? "correct" : "";
+  }
+
   function handleCheckEmail(): string {
     return eMail.match(regexEmail) ? "correct" : "";
   }
@@ -211,7 +240,7 @@ function UserData(): JSX.Element {
           <Stepper currentStep={2} />
           <Title>{t("userDataTitle")}</Title>
           <Text>{t("aboutYou")}</Text>
-          <InputContainer accessKey="correct">
+          <InputContainer accessKey={handleCheckName()}>
             <InputTitle>{t("name")}</InputTitle>
             <Input
               type="text"
@@ -222,7 +251,7 @@ function UserData(): JSX.Element {
               placeholder={t("namePlaceholder")}
             />
           </InputContainer>
-          <InputContainer accessKey={surname}>
+          <InputContainer accessKey={handleCheckSurname()}>
             <InputTitle>{t("surname")}</InputTitle>
             <Input
               type="text"
@@ -264,15 +293,33 @@ function UserData(): JSX.Element {
           </InputContainer>
           <ButtonsContainer>
             <ButtonBack>
-              <Link to="/" style={{ textDecoration: "none" }}>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                }}
+              >
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </Link>
             </ButtonBack>
-            <ButtonContinue>
-              <Link to="/check" style={{ textDecoration: "none" }}>
+            {handleCheckSurname() &&
+            handleCheckEmail() &&
+            handleCheckPhone() ? (
+              <ActiveButtonContinue>
+                <Link
+                  to="/check"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
+                  <ButtonContinueText>{t("continue")}</ButtonContinueText>
+                </Link>
+              </ActiveButtonContinue>
+            ) : (
+              <ButtonContinue disabled>
                 <ButtonContinueText>{t("continue")}</ButtonContinueText>
-              </Link>
-            </ButtonContinue>
+              </ButtonContinue>
+            )}
           </ButtonsContainer>
         </InfoContainer>
       </Container>
