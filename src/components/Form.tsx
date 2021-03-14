@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import Wallet from "./assets/wallet.svg";
 import Pet from "./assets/pet.svg";
-import Dropdown from "./assets/dropdown.svg";
+import DropdownIcon from "./assets/dropdown.svg";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -90,7 +90,6 @@ const Select = styled.div`
   padding: 16px 24px 16px 24px;
   height: 74px;
   margin-top: 5px;
-  margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,6 +106,10 @@ const Info = styled.p`
   font-size: 14px;
 `;
 
+const AmountContainer = styled.div`
+  margin-top: 40px;
+`;
+
 const AmountBox = styled.div`
   height: 53px;
   padding: 16px;
@@ -117,7 +120,7 @@ const AmountBox = styled.div`
   margin-right: 7px;
 `;
 
-const AmountContainer = styled.div`
+const AmountFlex = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 15px;
@@ -158,10 +161,82 @@ const ButtonText = styled.p`
   font-size: 14px;
 `;
 
+const Dropdown = styled.div`
+  position: absolute;
+  zindex: 10;
+  background: white;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  max-width: 557px;
+  max-height: 200px;
+  overflow: scroll;
+`;
+
+const DrowpdownRow = styled.p`
+  padding: 5px 24px 5px 24px;
+  margin: 0;
+
+  :hover {
+    background: silver;
+    cursor: pointer;
+  }
+`;
+
 function Form(): JSX.Element {
   const { t } = useTranslation();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
+
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [shelters, setShelters] = useState([]);
+  const [choosedShelter, setChoosedShelter] = useState<string>(
+    t("chooseChelter")
+  );
 
   const amounts: number[] = [5, 10, 20, 30, 50, 100];
+
+  useEffect(() => {
+    isDropdownVisible && handleFetchShelters();
+  }, [isDropdownVisible]);
+
+  // eslint-disable-next-line
+  function useOutsideAlerter(ref: React.MutableRefObject<any>) {
+    useEffect(() => {
+      function handleClickOutside(event: Event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsDropdownVisible(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  function handleFetchShelters() {
+    fetch("https://frontend-assignment-api.goodrequest.com/api/v1/shelters")
+      .then((response) => response.json())
+      .then((data) => {
+        setShelters(data.shelters);
+      });
+  }
+
+  function handlePickShelter(value: string) {
+    setChoosedShelter(value);
+    setIsDropdownVisible(false);
+  }
+
+  const sheltersDropdown = shelters.map(
+    (shelter: { id: number; name: string }) => (
+      <DrowpdownRow
+        key={shelter.id}
+        onClick={() => handlePickShelter(shelter.name)}
+      >
+        {shelter.name}
+      </DrowpdownRow>
+    )
+  );
 
   const amountBlock = amounts.map((amount, index) => (
     <AmountBox key={index}>
@@ -191,21 +266,26 @@ function Form(): JSX.Element {
               <ChooseTitle>{t("shelterChooseTitle")}</ChooseTitle>
               <Info>{t("optional")}</Info>
             </TitleContainer>
-            <Select>
+            <Select onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
               <div>
                 <ChooseTitle>{t("shelter")}</ChooseTitle>
-                <Placeholder>{t("chooseChelter")}</Placeholder>
+                <Placeholder>{choosedShelter}</Placeholder>
               </div>
-              <img src={Dropdown} />
+              <img src={DropdownIcon} />
             </Select>
-            <ChooseTitle>{t("amount")}</ChooseTitle>
+            {isDropdownVisible && (
+              <Dropdown ref={wrapperRef}>{sheltersDropdown}</Dropdown>
+            )}
             <AmountContainer>
-              {amountBlock}
-              <AmountBox>
-                <ChooseTitle>
-                  <Input /> €
-                </ChooseTitle>
-              </AmountBox>
+              <ChooseTitle>{t("amount")}</ChooseTitle>
+              <AmountFlex>
+                {amountBlock}
+                <AmountBox>
+                  <ChooseTitle>
+                    <Input /> €
+                  </ChooseTitle>
+                </AmountBox>
+              </AmountFlex>
             </AmountContainer>
           </ShelterContainer>
           <FlexEndContainer>
