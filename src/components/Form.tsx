@@ -52,6 +52,15 @@ const GroupShelter = styled.div`
   border-radius: 24px 0px 0px 24px;
   flex: 1;
   border: 1px solid #cd8b65;
+  box-shadow: ${(props) =>
+    props.accessKey === "shelter"
+      ? `0px 100px 80px rgba(0, 0, 0, 0.07),
+    0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
+    0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275),
+    0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035),
+    0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802)`
+      : "none"};
 `;
 
 const GroupFoundation = styled.div`
@@ -63,12 +72,15 @@ const GroupFoundation = styled.div`
   border-radius: 0px 24px 24px 0px;
   border: 1px solid #cd8b65;
   flex: 1;
-  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
+  box-shadow: ${(props) =>
+    props.accessKey === "foundation"
+      ? `0px 100px 80px rgba(0, 0, 0, 0.07),
     0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
     0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275),
     0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035),
     0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
-    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802)`
+      : "none"};
 `;
 
 const ShelterContainer = styled.div`
@@ -126,6 +138,23 @@ const AmountBox = styled.div`
   margin-right: 7px;
 `;
 
+const ActiveAmountBox = styled.div`
+  height: 53px;
+  padding: 16px;
+  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-right: 7px;
+`;
+
+const ActiveAmountText = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+`;
+
 const AmountFlex = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -137,6 +166,15 @@ const Input = styled.input`
   border: none;
   border-bottom: 1px solid #c9c9c9;
   outline: none;
+`;
+
+const ActiveInput = styled.input`
+  width: 33px;
+  border: none;
+  border-bottom: 1px solid #c9c9c9;
+  outline: none;
+  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
+  color: white;
 `;
 
 const FlexEndContainer = styled.div`
@@ -198,6 +236,8 @@ function Form(): JSX.Element {
   const [choosedShelter, setChoosedShelter] = useState<string>(
     t("chooseChelter")
   );
+  const [choosedAmount, setChoosedAmount] = useState(50);
+  const [inputAmount, setInputAmount] = useState(0);
   const [helpType, setHelpType] = useState("foundation");
 
   const amounts: number[] = [5, 10, 20, 30, 50, 100];
@@ -234,6 +274,16 @@ function Form(): JSX.Element {
     setIsDropdownVisible(false);
   }
 
+  function handlePickAmount(value: number) {
+    setChoosedAmount(value);
+  }
+
+  function handleInputChangeAmount(event: React.ChangeEvent<HTMLInputElement>) {
+    const number = Number(event.target.value);
+    setInputAmount(number);
+    setChoosedAmount(number);
+  }
+
   const sheltersDropdown = shelters.map(
     (shelter: { id: number; name: string }) => (
       <DrowpdownRow
@@ -245,10 +295,18 @@ function Form(): JSX.Element {
     )
   );
 
-  const amountBlock = amounts.map((amount, index) => (
-    <AmountBox key={index}>
-      <ChooseTitle>{amount} €</ChooseTitle>
-    </AmountBox>
+  const amountBlock = amounts.map((amount) => (
+    <div key={amount}>
+      {choosedAmount === amount ? (
+        <ActiveAmountBox onClick={() => handlePickAmount(amount)}>
+          <ActiveAmountText>{amount} €</ActiveAmountText>
+        </ActiveAmountBox>
+      ) : (
+        <AmountBox onClick={() => handlePickAmount(amount)}>
+          <ChooseTitle>{amount} €</ChooseTitle>
+        </AmountBox>
+      )}
+    </div>
   ));
 
   return (
@@ -314,11 +372,31 @@ function Form(): JSX.Element {
               <ChooseTitle>{t("amount")}</ChooseTitle>
               <AmountFlex>
                 {amountBlock}
-                <AmountBox>
-                  <ChooseTitle>
-                    <Input /> €
-                  </ChooseTitle>
-                </AmountBox>
+                {choosedAmount === inputAmount ? (
+                  <ActiveAmountBox>
+                    <ActiveAmountText>
+                      <ActiveInput
+                        type="number"
+                        value={inputAmount === 0 ? "" : inputAmount}
+                        onChange={handleInputChangeAmount}
+                        autoFocus
+                      />{" "}
+                      €
+                    </ActiveAmountText>
+                  </ActiveAmountBox>
+                ) : (
+                  <AmountBox onClick={() => setChoosedAmount(inputAmount)}>
+                    <ChooseTitle>
+                      <Input
+                        type="number"
+                        defaultValue={inputAmount === 0 ? "" : inputAmount}
+                        value={inputAmount === 0 ? "" : inputAmount}
+                        onChange={handleInputChangeAmount}
+                      />{" "}
+                      €
+                    </ChooseTitle>
+                  </AmountBox>
+                )}
               </AmountFlex>
             </AmountContainer>
           </ShelterContainer>
