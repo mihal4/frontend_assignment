@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Check from "./components/Check";
 import Form from "./components/Form";
@@ -15,7 +15,7 @@ function App(): JSX.Element {
       <Container data-testid="app">
         <Router>
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Form />
             </Route>
             <Route path="/user-data">

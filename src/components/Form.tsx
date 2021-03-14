@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import Wallet from "./assets/wallet.svg";
 import DropdownIcon from "./assets/dropdown.svg";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -276,6 +277,7 @@ function Form(): JSX.Element {
 
   function handlePickAmount(value: number) {
     setChoosedAmount(value);
+    setInputAmount(0);
   }
 
   function handleInputChangeAmount(event: React.ChangeEvent<HTMLInputElement>) {
@@ -389,7 +391,6 @@ function Form(): JSX.Element {
                     <ChooseTitle>
                       <Input
                         type="number"
-                        defaultValue={inputAmount === 0 ? "" : inputAmount}
                         value={inputAmount === 0 ? "" : inputAmount}
                         onChange={handleInputChangeAmount}
                       />{" "}
@@ -402,7 +403,9 @@ function Form(): JSX.Element {
           </ShelterContainer>
           <FlexEndContainer>
             <ContinueButton>
-              <ButtonText>{t("continue")}</ButtonText>
+              <Link to="/user-data" style={{ textDecoration: "none" }}>
+                <ButtonText>{t("continue")}</ButtonText>
+              </Link>
             </ContinueButton>
           </FlexEndContainer>
         </InfoContainer>
