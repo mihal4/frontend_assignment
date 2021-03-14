@@ -1,3 +1,13 @@
 {
-  "title": "Nadácia Good Boy"
+  "title": "Nadácia Good Boy",
+  "formTitle": "Vyberte si možnosť, ako chcete pomôcť",
+  "shelterTitle": "Chcem finančne prispieť konkrétnemu útulku",
+  "foundationTitle": "Chcem finančne prispieť celej nadácii",
+  "shelterChooseTitle": "Najviac mi záleží na útulku",
+  "shelter": "Útulok",
+  "chooseChelter": "Vyberte útulok zo zoznamu",
+  "optional": "Nepovinné",
+  "mandatory": "Povinné",
+  "amount": "Suma, ktorou chcem prispieť",
+  "continue": "Pokračovať"
 }
