@@ -320,7 +320,7 @@ function Form(): JSX.Element {
       <Navbar />
       <Container>
         <InfoContainer>
-          <Stepper />
+          <Stepper currentStep={1} />
           <Title>{t("formTitle")}</Title>
           {helpType === "shelter" ? (
             <GroupContainer>

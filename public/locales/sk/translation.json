@@ -1,6 +1,7 @@
 {
   "title": "Nadácia Good Boy",
   "formTitle": "Vyberte si možnosť, ako chcete pomôcť",
+  "userDataTitle": "Potrebujeme od Vás zopár informácií",
   "shelterTitle": "Chcem finančne prispieť konkrétnemu útulku",
   "foundationTitle": "Chcem finančne prispieť celej nadácii",
   "shelterChooseTitle": "Najviac mi záleží na útulku",
@@ -13,5 +14,14 @@
   "about": "O projekte",
   "howTo": "Ako na to",
   "contact": "Kontakt",
-  "loremIpsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. "
+  "loremIpsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in interdum ipsum, sit amet. ",
+  "aboutYou": "O vás",
+  "name": "Meno",
+  "namePlaceholder": "Zadajte Vaše meno",
+  "surname": "Priezvisko",
+  "surnamePlaceholder": "Zadajte Vaše priezvisko",
+  "eMail": "E-mailová adresa",
+  "eMailPlaceholder": "Zadajte Váš e-mail",
+  "number": "Telefónne číslo",
+  "back": "Späť"
 }

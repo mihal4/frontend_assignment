@@ -12,17 +12,21 @@ const Step = styled.div`
   margin-right: 5px;
 `;
 
-function Stepper(): JSX.Element {
+type IStepper = {
+  currentStep: number;
+};
+
+function Stepper(props: IStepper): JSX.Element {
   return (
     <Container>
       <Step>
-        <img src={ActiveStep} />
+        <img src={props.currentStep === 1 ? ActiveStep : BasicStep} />
       </Step>
       <Step>
-        <img src={BasicStep} />
+        <img src={props.currentStep === 2 ? ActiveStep : BasicStep} />
       </Step>
       <Step>
-        <img src={BasicStep} />
+        <img src={props.currentStep === 3 ? ActiveStep : BasicStep} />
       </Step>
     </Container>
   );

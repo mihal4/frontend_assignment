@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-world-flags": "^1.4.1",
     "@types/styled-components": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
@@ -52,6 +53,7 @@
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.1.1",
     "react-i18next": "^11.8.10",
+    "react-world-flags": "^1.4.0",
     "styled-components": "^5.2.1"
   },
   "resolutions": {

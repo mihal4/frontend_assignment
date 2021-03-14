@@ -6,7 +6,7 @@ import Form from "./components/Form";
 import UserData from "./components/UserData";
 
 const Container = styled.div`
-  background-color: white;
+  background: white;
 `;
 
 function App(): JSX.Element {
