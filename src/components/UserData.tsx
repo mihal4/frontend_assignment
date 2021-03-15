@@ -169,11 +169,11 @@ function UserData(): JSX.Element {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const [firstName, setFirstName] = useState("");
-  const [surname, setSurname] = useState<string>("");
+  const [surname, setSurname] = useState("");
   const [eMail, setEMail] = useState("");
   const [number, setNumber] = useState("");
 
-  const [surnameAlert, setSurnameaAlert] = useState<string>();
+  const [surnameAlert, setSurnameAlert] = useState<string>();
   const [eMailALert, setEmailAlert] = useState<string>();
   const [phoneAlert, setPhoneAlert] = useState<string>();
 
@@ -228,8 +228,8 @@ function UserData(): JSX.Element {
 
   function handleCheckSurname(value: string) {
     value.length > 1
-      ? setSurnameaAlert("")
-      : setSurnameaAlert(t("firstNameAlert"));
+      ? setSurnameAlert("")
+      : setSurnameAlert(t("firstNameAlert"));
   }
 
   function handleCheckEmail(value: string) {
