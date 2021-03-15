@@ -23,5 +23,8 @@
   "eMail": "E-mailová adresa",
   "eMailPlaceholder": "Zadajte Váš e-mail",
   "number": "Telefónne číslo",
-  "back": "Späť"
+  "back": "Späť",
+  "firstNameAlert": "Minimálny počet znakov je 2",
+  "emailAlert": "Prosím zadajte správny formát e-mailovej adresy",
+  "phoneAlert": "Prosím zadajte správny formát telefónneho čísla"
 }
