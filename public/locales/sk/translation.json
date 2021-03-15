@@ -2,6 +2,7 @@
   "title": "Nadácia Good Boy",
   "formTitle": "Vyberte si možnosť, ako chcete pomôcť",
   "userDataTitle": "Potrebujeme od Vás zopár informácií",
+  "checkTitle": "Skontrolujte si zadané údaje",
   "shelterTitle": "Chcem finančne prispieť konkrétnemu útulku",
   "foundationTitle": "Chcem finančne prispieť celej nadácii",
   "shelterChooseTitle": "Najviac mi záleží na útulku",
@@ -26,5 +27,11 @@
   "back": "Späť",
   "firstNameAlert": "Minimálny počet znakov je 2",
   "emailAlert": "Prosím zadajte správny formát e-mailovej adresy",
-  "phoneAlert": "Prosím zadajte správny formát telefónneho čísla"
+  "phoneAlert": "Prosím zadajte správny formát telefónneho čísla",
+  "foundationType": "Akou formou chcem pomôcť",
+  "shelterType": "Najviac mi záleží na útulku",
+  "amountHelp": "Suma ktorou chcem pomôcť",
+  "nameSurname": "Meno a priezvisko",
+  "agree": "Súhlasím so spracovaním mojich osobných údajov",
+  "sendForm": "Odoslať formulár"
 }

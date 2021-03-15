@@ -64,6 +64,7 @@ const GroupShelter = styled.div`
     0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
     0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802)`
       : "none"};
+  cursor: pointer;
 `;
 
 const GroupFoundation = styled.div`
@@ -84,6 +85,7 @@ const GroupFoundation = styled.div`
     0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
     0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802)`
       : "none"};
+  cursor: pointer;
 `;
 
 const ShelterContainer = styled.div`
@@ -140,6 +142,7 @@ const AmountBox = styled.div`
   border-radius: 8px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 `;
 
 const ActiveAmountBox = styled.div`
@@ -151,6 +154,7 @@ const ActiveAmountBox = styled.div`
   border-radius: 8px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 `;
 
 const ActiveAmountText = styled.p`
@@ -202,6 +206,7 @@ const ContinueButton = styled.button`
   border: none;
   margin-top: 72px;
   outline: none;
+  cursor: pointer;
 `;
 
 const ButtonText = styled.p`
@@ -217,7 +222,7 @@ const Dropdown = styled.div`
   background: white;
   border: 1px solid #dfdfdf;
   border-radius: 5px;
-  max-width: 557px;
+  width: 557px;
   max-height: 200px;
   overflow: scroll;
 `;
@@ -407,11 +412,11 @@ function Form(): JSX.Element {
             </AmountContainer>
           </ShelterContainer>
           <FlexEndContainer>
-            <ContinueButton>
-              <Link to="/user-data" style={{ textDecoration: "none" }}>
+            <Link to="/user-data" style={{ textDecoration: "none" }}>
+              <ContinueButton>
                 <ButtonText>{t("continue")}</ButtonText>
-              </Link>
-            </ContinueButton>
+              </ContinueButton>
+            </Link>
           </FlexEndContainer>
         </InfoContainer>
       </Container>
