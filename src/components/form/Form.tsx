@@ -8,6 +8,8 @@ import Footer from "../Footer";
 import HelpType from "./HelpType";
 import ShelterPicker from "./ShelterPicker";
 import AmountPicker from "./AmountPicker";
+import { useSelector } from "react-redux";
+import { IState } from "../../store/reducer";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -59,6 +61,9 @@ const ButtonText = styled.p`
 const Form = (): JSX.Element => {
   const { t } = useTranslation();
 
+  const form = useSelector((state: IState) => state.form);
+  const helpType = useSelector((state: IState) => state.helpType);
+
   return (
     <div>
       <Navbar />
@@ -70,11 +75,17 @@ const Form = (): JSX.Element => {
           <ShelterPicker />
           <AmountPicker />
           <FlexEndContainer>
-            <Link to="/user-data" style={{ textDecoration: "none" }}>
-              <ContinueButton>
+            {helpType === "shelter" && !form.shelter.id ? (
+              <ContinueButton disabled>
                 <ButtonText>{t("continue")}</ButtonText>
               </ContinueButton>
-            </Link>
+            ) : (
+              <Link to="/user-data" style={{ textDecoration: "none" }}>
+                <ContinueButton>
+                  <ButtonText>{t("continue")}</ButtonText>
+                </ContinueButton>
+              </Link>
+            )}
           </FlexEndContainer>
         </InfoContainer>
       </Container>

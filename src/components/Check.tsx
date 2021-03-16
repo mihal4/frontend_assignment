@@ -6,6 +6,8 @@ import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import CheckboxIcon from "./assets/checkbox.svg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IState } from "../store/reducer";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -96,6 +98,7 @@ const ButtonContinue = styled.button`
   padding: 20px 24px;
   border: none;
   outline: none;
+  cursor: pointer;
 `;
 
 const ButtonContinueText = styled.p`
@@ -105,13 +108,34 @@ const ButtonContinueText = styled.p`
   color: white;
 `;
 
-function Check(): JSX.Element {
+const Check = (): JSX.Element => {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
 
-  function handleSend() {
-    console.log("send");
-  }
+  const form = useSelector((state: IState) => state.form);
+  const helpType = useSelector((state: IState) => state.helpType);
+
+  const handleSend = async () => {
+    checked &&
+      (await fetch(
+        "https://frontend-assignment-api.goodrequest.com/api/v1/shelters/contribute",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            phone: form.phone,
+            value: form.value,
+            shelterID: form.shelter.id,
+          }),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        }));
+  };
 
   return (
     <div>
@@ -122,17 +146,21 @@ function Check(): JSX.Element {
           <HeadTitle>{t("checkTitle")}</HeadTitle>
           <DataContainer>
             <Title>{t("foundationType")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
-            <Title>{t("shelterType")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
+            <Text>{t(helpType + "Title")}</Text>
+            {form.shelter.name && (
+              <div>
+                <Title>{t("shelterType")}</Title>
+                <Text>{form.shelter.name}</Text>
+              </div>
+            )}
             <Title>{t("amountHelp")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
+            <Text>{form.value} €</Text>
             <Title>{t("nameSurname")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
+            <Text>{form.firstName + " " + form.lastName}</Text>
             <Title>{t("eMail")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
+            <Text>{form.email}</Text>
             <Title>{t("number")}</Title>
-            <Text>Chcem finančne prispieť celej nadácii</Text>
+            <Text>{form.phone}</Text>
           </DataContainer>
           <AgreementContainer onClick={() => setChecked(!checked)}>
             <Checkbox>{checked && <Icon src={CheckboxIcon} />}</Checkbox>
@@ -149,7 +177,7 @@ function Check(): JSX.Element {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            <ButtonContinue disabled={!checked} onClick={handleSend}>
+            <ButtonContinue onClick={handleSend}>
               <ButtonContinueText>{t("sendForm")}</ButtonContinueText>
             </ButtonContinue>
           </ButtonsContainer>
@@ -158,6 +186,6 @@ function Check(): JSX.Element {
       <Footer />
     </div>
   );
-}
+};
 
 export default Check;

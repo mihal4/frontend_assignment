@@ -5,9 +5,12 @@ export type IState = {
     firstName: string;
     lastName: string;
     email: string;
-    phone: string;
     value: number;
-    shelterID: string | null;
+    phone: string;
+    shelter: {
+      id: number | null;
+      name: string | null;
+    };
   };
   helpType: string;
 };
@@ -19,19 +22,22 @@ const initialState: IState = {
     email: "",
     phone: "",
     value: 50,
-    shelterID: null,
+    shelter: {
+      id: null,
+      name: null,
+    },
   },
   helpType: "foundation",
 };
 // eslint-disable-next-line
 const reducer = (state = initialState, action: any): IState => {
   switch (action.type) {
-    case ActionTypes.SET_SHELTER_ID:
+    case ActionTypes.SET_SHELTER:
       return {
         ...state,
         form: {
           ...state.form,
-          shelterID: action.shelterId,
+          shelter: action.shelter,
         },
       };
     case ActionTypes.SET_VALUE:
@@ -40,6 +46,14 @@ const reducer = (state = initialState, action: any): IState => {
         form: {
           ...state.form,
           value: action.amount,
+        },
+      };
+    case ActionTypes.SET_FIRST_NAME:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          firstName: action.firstName,
         },
       };
     case ActionTypes.SET_LAST_NAME:

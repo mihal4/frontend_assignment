@@ -70,20 +70,25 @@ const ChooseTitle = styled.p`
   margin: 0;
 `;
 
+type IShelter = {
+  id: number;
+  name: string;
+};
+
 const ShelterPicker = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const helpType = useSelector((state: IState) => state.helpType);
-  const setShelterID = useCallback(
-    (id: number) =>
-      dispatch({ type: actionTypes.SET_SHELTER_ID, shelterId: id }),
+  const form = useSelector((state: IState) => state.form);
+  const setShelter = useCallback(
+    (value: IShelter) =>
+      dispatch({ type: actionTypes.SET_SHELTER, shelter: value }),
     [dispatch]
   );
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [shelters, setShelters] = useState([]);
-  const [shelterName, setShelterName] = useState<string>(t("chooseChelter"));
 
   const wrapperRef = useRef(null);
 
@@ -117,8 +122,7 @@ const ShelterPicker = (): JSX.Element => {
   };
 
   const handlePickShelter = (value: { id: number; name: string }) => {
-    setShelterID(value.id);
-    setShelterName(value.name);
+    setShelter(value);
     setIsDropdownVisible(false);
   };
 
@@ -140,7 +144,11 @@ const ShelterPicker = (): JSX.Element => {
         <Select onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
           <div>
             <ChooseTitle>{t("shelter")}</ChooseTitle>
-            <Placeholder>{shelterName}</Placeholder>
+            <Placeholder>
+              {form.shelter.name && form.shelter.name !== ""
+                ? form.shelter.name
+                : t("chooseChelter")}
+            </Placeholder>
           </div>
           <img src={DropdownIcon} />
         </Select>

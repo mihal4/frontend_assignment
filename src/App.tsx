@@ -9,7 +9,7 @@ const Container = styled.div`
   background: white;
 `;
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
   return (
     <Suspense fallback="loading">
       <Container data-testid="app">
@@ -29,6 +29,6 @@ function App(): JSX.Element {
       </Container>
     </Suspense>
   );
-}
+};
 
 export default App;

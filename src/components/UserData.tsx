@@ -188,6 +188,12 @@ const UserData = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const form = useSelector((state: IState) => state.form);
+
+  const setFirstName = useCallback(
+    (value: string) =>
+      dispatch({ type: actionTypes.SET_FIRST_NAME, firstName: value }),
+    [dispatch]
+  );
   const setSurname = useCallback(
     (value: string) =>
       dispatch({ type: actionTypes.SET_LAST_NAME, lastName: value }),
@@ -203,8 +209,6 @@ const UserData = (): JSX.Element => {
   );
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
-  const [firstName, setFirstName] = useState("");
 
   const [surnameAlert, setSurnameAlert] = useState<string>();
   const [eMailALert, setEmailAlert] = useState<string>();
@@ -266,12 +270,6 @@ const UserData = (): JSX.Element => {
     handleCheckPhone(form.phone);
   };
 
-  const handleVerifyInputs = () => {
-    return surnameAlert === "" && eMailALert === "" && phoneAlert === ""
-      ? true
-      : false;
-  };
-
   const countries = flags.map((flag) => (
     <DrowpdownRow key={flag.code} onClick={() => handlePickCountry(flag)}>
       <Flag code={flag.code} style={{ width: 23 }} />
@@ -290,9 +288,8 @@ const UserData = (): JSX.Element => {
           <InputContainer>
             <Input
               type="text"
-              minLength={2}
               maxLength={20}
-              value={firstName}
+              value={form.firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder={t("namePlaceholder")}
             />
@@ -353,20 +350,24 @@ const UserData = (): JSX.Element => {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            <ButtonContinue onClick={handleContinue}>
-              {handleVerifyInputs() ? (
-                <Link
-                  to="/check"
-                  style={{
-                    textDecoration: "none",
-                  }}
-                >
+            {(surnameAlert === undefined || surnameAlert === "") &&
+            (eMailALert === undefined || eMailALert === "") &&
+            (phoneAlert === undefined || phoneAlert === "") ? (
+              <Link
+                to="/check"
+                style={{
+                  textDecoration: "none",
+                }}
+              >
+                <ButtonContinue onClick={handleContinue}>
                   <ButtonContinueText>{t("continue")}</ButtonContinueText>
-                </Link>
-              ) : (
+                </ButtonContinue>
+              </Link>
+            ) : (
+              <ButtonContinue onClick={handleContinue}>
                 <ButtonContinueText>{t("continue")}</ButtonContinueText>
-              )}
-            </ButtonContinue>
+              </ButtonContinue>
+            )}
           </ButtonsContainer>
         </InfoContainer>
       </Container>
