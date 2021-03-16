@@ -49,14 +49,14 @@ const Dropdown = styled.div`
   background: white;
   border: 1px solid #dfdfdf;
   border-radius: 5px;
-  width: 100%;
+  width: 90%;
   max-width: 550px;
   max-height: 200px;
   overflow: scroll;
 `;
 
 const DrowpdownRow = styled.p`
-  padding: 5px 24px 5px 24px;
+  padding: 5px 0px 5px 24px;
   margin: 0;
 
   :hover {
