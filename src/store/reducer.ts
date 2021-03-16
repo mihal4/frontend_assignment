@@ -42,6 +42,30 @@ const reducer = (state = initialState, action: any): IState => {
           value: action.amount,
         },
       };
+    case ActionTypes.SET_LAST_NAME:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          lastName: action.lastName,
+        },
+      };
+    case ActionTypes.SET_EMAIL:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          email: action.email,
+        },
+      };
+    case ActionTypes.SET_PHONE:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          phone: action.phone,
+        },
+      };
     case ActionTypes.SET_HELP_TYPE:
       return {
         ...state,

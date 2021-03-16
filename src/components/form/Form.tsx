@@ -6,8 +6,8 @@ import Stepper from "../Stepper";
 import { Link } from "react-router-dom";
 import Footer from "../Footer";
 import HelpType from "./HelpType";
-import ShelterPick from "./ShelterPick";
-import AmountPick from "./AmountPick";
+import ShelterPicker from "./ShelterPicker";
+import AmountPicker from "./AmountPicker";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -56,7 +56,7 @@ const ButtonText = styled.p`
   font-size: 14px;
 `;
 
-function Form(): JSX.Element {
+const Form = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
@@ -67,8 +67,8 @@ function Form(): JSX.Element {
           <Stepper currentStep={1} />
           <Title>{t("formTitle")}</Title>
           <HelpType />
-          <ShelterPick />
-          <AmountPick />
+          <ShelterPicker />
+          <AmountPicker />
           <FlexEndContainer>
             <Link to="/user-data" style={{ textDecoration: "none" }}>
               <ContinueButton>
@@ -81,6 +81,6 @@ function Form(): JSX.Element {
       <Footer />
     </div>
   );
-}
+};
 
 export default Form;

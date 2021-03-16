@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Footer from "./Footer";
@@ -6,6 +6,9 @@ import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import Flag from "react-world-flags";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { IState } from "../store/reducer";
+import * as actionTypes from "../store/actions";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -161,17 +164,47 @@ type IFlag = {
   prefix: string;
 };
 
-function UserData(): JSX.Element {
+const UserData = (): JSX.Element => {
   const { t } = useTranslation();
   const wrapperRef = useRef(null);
+
+  // eslint-disable-next-line
+  const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
+    useEffect(() => {
+      const handleClickOutside = (event: Event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsDropdownVisible(false);
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  };
+
   useOutsideAlerter(wrapperRef);
+
+  const dispatch = useDispatch();
+
+  const form = useSelector((state: IState) => state.form);
+  const setSurname = useCallback(
+    (value: string) =>
+      dispatch({ type: actionTypes.SET_LAST_NAME, lastName: value }),
+    [dispatch]
+  );
+  const setEmail = useCallback(
+    (value: string) => dispatch({ type: actionTypes.SET_EMAIL, email: value }),
+    [dispatch]
+  );
+  const setPhone = useCallback(
+    (value: string) => dispatch({ type: actionTypes.SET_PHONE, phone: value }),
+    [dispatch]
+  );
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const [firstName, setFirstName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [eMail, setEMail] = useState("");
-  const [number, setNumber] = useState("");
 
   const [surnameAlert, setSurnameAlert] = useState<string>();
   const [eMailALert, setEmailAlert] = useState<string>();
@@ -185,74 +218,59 @@ function UserData(): JSX.Element {
   // eslint-disable-next-line
   const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const [choosedCountry, setPChoosedCountry] = useState<IFlag>(flags[0]);
+  const [choosedCountry, setChoosedCountry] = useState<IFlag>(flags[0]);
 
-  // eslint-disable-next-line
-  function useOutsideAlerter(ref: React.MutableRefObject<any>) {
-    useEffect(() => {
-      function handleClickOutside(event: Event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsDropdownVisible(false);
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
-
-  function handlePickCountry(value: IFlag) {
-    setPChoosedCountry(value);
+  const handlePickCountry = (value: IFlag) => {
+    setChoosedCountry(value);
     setIsDropdownVisible(false);
-  }
+  };
 
-  function handleChangeSurname(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleChangeSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSurname(event.target.value);
     handleCheckSurname(event.target.value);
-  }
+  };
 
-  function handleChangeEmail(event: React.ChangeEvent<HTMLInputElement>) {
-    setEMail(event.target.value);
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
     handleCheckEmail(event.target.value);
-  }
+  };
 
-  function handleChangePhone(event: React.ChangeEvent<HTMLInputElement>) {
-    setNumber(
-      number === ""
+  const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(
+      form.phone === ""
         ? choosedCountry.prefix + event.target.value
         : event.target.value
     );
     handleCheckPhone(event.target.value);
-  }
+  };
 
-  function handleCheckSurname(value: string) {
+  const handleCheckSurname = (value: string) => {
     value.length > 1
       ? setSurnameAlert("")
       : setSurnameAlert(t("firstNameAlert"));
-  }
+  };
 
-  function handleCheckEmail(value: string) {
+  const handleCheckEmail = (value: string) => {
     value.match(regexEmail)
       ? setEmailAlert("")
       : setEmailAlert(t("emailAlert"));
-  }
+  };
 
-  function handleCheckPhone(value: string) {
+  const handleCheckPhone = (value: string) => {
     value.length === 13 ? setPhoneAlert("") : setPhoneAlert(t("phoneAlert"));
-  }
+  };
 
-  function handleContinue() {
-    handleCheckSurname(surname);
-    handleCheckEmail(eMail);
-    handleCheckPhone(number);
-  }
+  const handleContinue = () => {
+    handleCheckSurname(form.lastName);
+    handleCheckEmail(form.email);
+    handleCheckPhone(form.phone);
+  };
 
-  function handleVerifyInputs() {
+  const handleVerifyInputs = () => {
     return surnameAlert === "" && eMailALert === "" && phoneAlert === ""
       ? true
       : false;
-  }
+  };
 
   const countries = flags.map((flag) => (
     <DrowpdownRow key={flag.code} onClick={() => handlePickCountry(flag)}>
@@ -286,7 +304,7 @@ function UserData(): JSX.Element {
               type="text"
               minLength={2}
               maxLength={30}
-              value={surname}
+              value={form.lastName}
               onChange={handleChangeSurname}
               placeholder={t("surnamePlaceholder")}
             />
@@ -298,7 +316,7 @@ function UserData(): JSX.Element {
               type="text"
               minLength={2}
               maxLength={20}
-              value={eMail}
+              value={form.email}
               onChange={handleChangeEmail}
               placeholder={t("eMailPlaceholder")}
             />
@@ -317,7 +335,7 @@ function UserData(): JSX.Element {
             <Input
               type="text"
               maxLength={13}
-              value={number}
+              value={form.phone}
               onChange={handleChangePhone}
               placeholder={choosedCountry.prefix}
               style={{ paddingLeft: 60, paddingTop: 45 }}
@@ -355,6 +373,6 @@ function UserData(): JSX.Element {
       <Footer />
     </div>
   );
-}
+};
 
 export default UserData;

@@ -70,7 +70,7 @@ const ActiveAmountText = styled.p`
   color: white;
 `;
 
-const AmountPick = (): JSX.Element => {
+const AmountPicker = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -84,16 +84,18 @@ const AmountPick = (): JSX.Element => {
 
   const [inputAmount, setInputAmount] = useState(0);
 
-  function handlePickAmount(value: number) {
+  const handlePickAmount = (value: number) => {
     setValue(value);
     setInputAmount(0);
-  }
+  };
 
-  function handleInputChangeAmount(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleInputChangeAmount = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const number = Number(event.target.value);
     setInputAmount(number);
     setValue(number);
-  }
+  };
 
   const amountBlock = amounts.map((amount) => (
     <div key={amount}>
@@ -144,4 +146,4 @@ const AmountPick = (): JSX.Element => {
   );
 };
 
-export default AmountPick;
+export default AmountPicker;

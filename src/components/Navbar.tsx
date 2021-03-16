@@ -36,7 +36,7 @@ const Icon = styled.div`
   margin-right: 8px;
 `;
 
-function Navbar(): JSX.Element {
+const Navbar = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
@@ -52,6 +52,6 @@ function Navbar(): JSX.Element {
       </CenteredView>
     </Container>
   );
-}
+};
 
 export default Navbar;

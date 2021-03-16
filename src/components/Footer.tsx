@@ -40,7 +40,7 @@ const Image = styled.img`
   margin-bottom: 20px;
 `;
 
-function Footer(): JSX.Element {
+const Footer = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div>
@@ -64,6 +64,6 @@ function Footer(): JSX.Element {
       </Container>
     </div>
   );
-}
+};
 
 export default Footer;

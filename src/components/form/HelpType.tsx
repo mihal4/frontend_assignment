@@ -121,17 +121,4 @@ const HelpType = (): JSX.Element => {
   );
 };
 
-/*const mapStateToProps = (state: IState) => {
-  return {
-    helpType: state.helpType,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    onHelpTypeChange: (helpType: string) =>
-      dispatch({ type: actionTypes.SET_HELP_TYPE, help: helpType }),
-  };
-};*/
-
 export default HelpType;
