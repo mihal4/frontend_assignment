@@ -38,18 +38,19 @@ const Text = styled.p`
 const Alert = styled.p`
   font-size: 14px;
   margin: 0;
+  margin-top: -15px;
   margin-bottom: 5px;
   color: red;
+  width: 100%;
+  text-align: right;
 `;
 
 const InputContainer = styled.div`
   position: relative;
 `;
 
-const InputTitle = styled.p`
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
+const InputTitleContainer = styled.div`
+  display: flex;
   margin-bottom: 5px;
   position: absolute;
   zindex: 1;
@@ -57,7 +58,18 @@ const InputTitle = styled.p`
   left: 24px;
 `;
 
-const InputText = styled.p`
+const InputTitle = styled.label`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const AlertSymbol = styled.label`
+  font-size: 16px;
+  font-weight: 600;
+  color: red;
+`;
+
+const InputText = styled.label`
   font-size: 16px;
   margin: 0 10px;
   color: grey;
@@ -295,7 +307,6 @@ const UserData = (): JSX.Element => {
             />
             <InputTitle>{t("name")}</InputTitle>
           </InputContainer>
-          <Alert>{surnameAlert}</Alert>
           <InputContainer>
             <Input
               type="text"
@@ -305,9 +316,12 @@ const UserData = (): JSX.Element => {
               onChange={handleChangeSurname}
               placeholder={t("surnamePlaceholder")}
             />
-            <InputTitle>{t("surname")}*</InputTitle>
+            <InputTitleContainer>
+              <InputTitle>{t("surname")}</InputTitle>
+              <AlertSymbol>*</AlertSymbol>
+            </InputTitleContainer>
           </InputContainer>
-          <Alert>{eMailALert}</Alert>
+          {surnameAlert && <Alert>{surnameAlert}</Alert>}
           <InputContainer>
             <Input
               type="text"
@@ -317,9 +331,12 @@ const UserData = (): JSX.Element => {
               onChange={handleChangeEmail}
               placeholder={t("eMailPlaceholder")}
             />
-            <InputTitle>{t("eMail")}*</InputTitle>
+            <InputTitleContainer>
+              <InputTitle>{t("eMail")}</InputTitle>
+              <AlertSymbol>*</AlertSymbol>
+            </InputTitleContainer>
           </InputContainer>
-          <Alert>{phoneAlert}</Alert>
+          {eMailALert && <Alert>{eMailALert}</Alert>}
           <InputContainer>
             <FlagContainer
               onClick={() => setIsDropdownVisible(!isDropdownVisible)}
@@ -337,8 +354,12 @@ const UserData = (): JSX.Element => {
               placeholder={choosedCountry.prefix}
               style={{ paddingLeft: 60, paddingTop: 45 }}
             />
-            <InputTitle>{t("number")}*</InputTitle>
+            <InputTitleContainer>
+              <InputTitle>{t("number")}</InputTitle>
+              <AlertSymbol>*</AlertSymbol>
+            </InputTitleContainer>
           </InputContainer>
+          {phoneAlert && <Alert>{phoneAlert}</Alert>}
           <ButtonsContainer>
             <Link
               to="/"

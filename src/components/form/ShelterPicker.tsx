@@ -49,7 +49,7 @@ const Dropdown = styled.div`
   background: white;
   border: 1px solid #dfdfdf;
   border-radius: 5px;
-  width: 552px;
+  max-width: 552px;
   max-height: 200px;
   overflow: scroll;
 `;
