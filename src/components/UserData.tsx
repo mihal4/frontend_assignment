@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Stepper from "./Stepper";
 import Flag from "react-world-flags";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "../store/reducer";
 import * as actionTypes from "../store/actions";
@@ -84,7 +84,8 @@ const Input = styled.input`
   padding: 36px 24px 16px 24px;
   margin-bottom: 16px;
   outline: none;
-  width: 557px;
+  width: 100%;
+  max-width: 557px;
 
   :focus {
     border: 1px solid #cd8b65;
@@ -180,6 +181,8 @@ const UserData = (): JSX.Element => {
   const { t } = useTranslation();
   const wrapperRef = useRef(null);
 
+  const history = useHistory();
+
   // eslint-disable-next-line
   const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
     useEffect(() => {
@@ -260,26 +263,44 @@ const UserData = (): JSX.Element => {
     handleCheckPhone(event.target.value);
   };
 
-  const handleCheckSurname = (value: string) => {
-    value.length > 1
-      ? setSurnameAlert("")
-      : setSurnameAlert(t("firstNameAlert"));
+  const handleCheckSurname = (value: string): boolean => {
+    if (value.length > 1) {
+      setSurnameAlert("");
+      return true;
+    } else {
+      setSurnameAlert(t("firstNameAlert"));
+      return false;
+    }
   };
 
-  const handleCheckEmail = (value: string) => {
-    value.match(regexEmail)
-      ? setEmailAlert("")
-      : setEmailAlert(t("emailAlert"));
+  const handleCheckEmail = (value: string): boolean => {
+    if (value.match(regexEmail)) {
+      setEmailAlert("");
+      return true;
+    } else {
+      setEmailAlert(t("emailAlert"));
+      return false;
+    }
   };
 
-  const handleCheckPhone = (value: string) => {
-    value.length === 13 ? setPhoneAlert("") : setPhoneAlert(t("phoneAlert"));
+  const handleCheckPhone = (value: string): boolean => {
+    if (value.length === 13) {
+      setPhoneAlert("");
+      return true;
+    } else {
+      setPhoneAlert(t("phoneAlert"));
+      return false;
+    }
   };
 
   const handleContinue = () => {
-    handleCheckSurname(form.lastName);
-    handleCheckEmail(form.email);
-    handleCheckPhone(form.phone);
+    if (
+      handleCheckSurname(form.lastName) &&
+      handleCheckEmail(form.email) &&
+      handleCheckPhone(form.phone)
+    ) {
+      history.push("/check");
+    }
   };
 
   const countries = flags.map((flag) => (
@@ -305,7 +326,9 @@ const UserData = (): JSX.Element => {
               onChange={(e) => setFirstName(e.target.value)}
               placeholder={t("namePlaceholder")}
             />
-            <InputTitle>{t("name")}</InputTitle>
+            <InputTitleContainer>
+              <InputTitle>{t("name")}</InputTitle>
+            </InputTitleContainer>
           </InputContainer>
           <InputContainer>
             <Input
@@ -325,8 +348,6 @@ const UserData = (): JSX.Element => {
           <InputContainer>
             <Input
               type="text"
-              minLength={2}
-              maxLength={20}
               value={form.email}
               onChange={handleChangeEmail}
               placeholder={t("eMailPlaceholder")}
@@ -371,24 +392,9 @@ const UserData = (): JSX.Element => {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            {(surnameAlert === undefined || surnameAlert === "") &&
-            (eMailALert === undefined || eMailALert === "") &&
-            (phoneAlert === undefined || phoneAlert === "") ? (
-              <Link
-                to="/check"
-                style={{
-                  textDecoration: "none",
-                }}
-              >
-                <ButtonContinue onClick={handleContinue}>
-                  <ButtonContinueText>{t("continue")}</ButtonContinueText>
-                </ButtonContinue>
-              </Link>
-            ) : (
-              <ButtonContinue onClick={handleContinue}>
-                <ButtonContinueText>{t("continue")}</ButtonContinueText>
-              </ButtonContinue>
-            )}
+            <ButtonContinue onClick={handleContinue}>
+              <ButtonContinueText>{t("continue")}</ButtonContinueText>
+            </ButtonContinue>
           </ButtonsContainer>
         </InfoContainer>
       </Container>

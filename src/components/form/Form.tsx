@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Navbar from "../Navbar";
 import Stepper from "../Stepper";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Footer from "../Footer";
 import HelpType from "./HelpType";
 import ShelterPicker from "./ShelterPicker";
@@ -60,9 +60,14 @@ const ButtonText = styled.p`
 
 const Form = (): JSX.Element => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const form = useSelector((state: IState) => state.form);
   const helpType = useSelector((state: IState) => state.helpType);
+
+  const handleContinue = () => {
+    !(helpType === "shelter" && !form.shelter.id) && history.push("/user-data");
+  };
 
   return (
     <div>
@@ -75,17 +80,12 @@ const Form = (): JSX.Element => {
           <ShelterPicker />
           <AmountPicker />
           <FlexEndContainer>
-            {helpType === "shelter" && !form.shelter.id ? (
-              <ContinueButton disabled>
-                <ButtonText>{t("continue")}</ButtonText>
-              </ContinueButton>
-            ) : (
-              <Link to="/user-data" style={{ textDecoration: "none" }}>
-                <ContinueButton>
-                  <ButtonText>{t("continue")}</ButtonText>
-                </ContinueButton>
-              </Link>
-            )}
+            <ContinueButton
+              disabled={helpType === "shelter" && !form.shelter.id}
+              onClick={handleContinue}
+            >
+              <ButtonText>{t("continue")}</ButtonText>
+            </ContinueButton>
           </FlexEndContainer>
         </InfoContainer>
       </Container>

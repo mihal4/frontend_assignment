@@ -177,7 +177,7 @@ const Check = (): JSX.Element => {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            <ButtonContinue onClick={handleSend}>
+            <ButtonContinue onClick={handleSend} disabled={!checked}>
               <ButtonContinueText>{t("sendForm")}</ButtonContinueText>
             </ButtonContinue>
           </ButtonsContainer>
