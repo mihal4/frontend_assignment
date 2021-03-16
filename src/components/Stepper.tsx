@@ -16,7 +16,7 @@ type IStepper = {
   currentStep: number;
 };
 
-function Stepper(props: IStepper): JSX.Element {
+const Stepper = (props: IStepper): JSX.Element => {
   return (
     <Container>
       <Step>
@@ -30,6 +30,6 @@ function Stepper(props: IStepper): JSX.Element {
       </Step>
     </Container>
   );
-}
+};
 
 export default Stepper;

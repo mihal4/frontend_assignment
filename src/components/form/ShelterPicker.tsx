@@ -70,7 +70,7 @@ const ChooseTitle = styled.p`
   margin: 0;
 `;
 
-const ShelterPick = (): JSX.Element => {
+const ShelterPicker = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -86,40 +86,41 @@ const ShelterPick = (): JSX.Element => {
   const [shelterName, setShelterName] = useState<string>(t("chooseChelter"));
 
   const wrapperRef = useRef(null);
+
+  // eslint-disable-next-line
+  const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
+    useEffect(() => {
+      const handleClickOutside = (event: Event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsDropdownVisible(false);
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  };
+
   useOutsideAlerter(wrapperRef);
 
   useEffect(() => {
     isDropdownVisible && handleFetchShelters();
   }, [isDropdownVisible]);
 
-  // eslint-disable-next-line
-  function useOutsideAlerter(ref: React.MutableRefObject<any>) {
-    useEffect(() => {
-      function handleClickOutside(event: Event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsDropdownVisible(false);
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
-
-  function handleFetchShelters() {
+  const handleFetchShelters = () => {
     fetch("https://frontend-assignment-api.goodrequest.com/api/v1/shelters")
       .then((response) => response.json())
       .then((data) => {
         setShelters(data.shelters);
       });
-  }
+  };
 
-  function handlePickShelter(value: { id: number; name: string }) {
+  const handlePickShelter = (value: { id: number; name: string }) => {
     setShelterID(value.id);
     setShelterName(value.name);
     setIsDropdownVisible(false);
-  }
+  };
 
   const sheltersDropdown = shelters.map(
     (shelter: { id: number; name: string }) => (
@@ -151,4 +152,4 @@ const ShelterPick = (): JSX.Element => {
   );
 };
 
-export default ShelterPick;
+export default ShelterPicker;
