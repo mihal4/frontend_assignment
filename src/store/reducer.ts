@@ -23,7 +23,7 @@ const initialState: IState = {
   },
   helpType: "foundation",
 };
-
+// eslint-disable-next-line
 const reducer = (state = initialState, action: any): IState => {
   switch (action.type) {
     case ActionTypes.SET_SHELTER_ID:
