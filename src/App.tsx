@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Check from "./components/check/check";
-import Form from "./components/form/form";
+import Form from "./components/contribution-form/form";
 import UserData from "./components/user-data/user-data";
 
 const Container = styled.div`
