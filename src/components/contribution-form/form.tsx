@@ -42,7 +42,7 @@ const Form = (): JSX.Element => {
   }, []);
 
   const handleContinue = () => {
-    !(contributor?._helpType === "shelter" && !contributor.shelterID) &&
+    !(contributor._helpType === "shelter" && !contributor.shelterID) &&
       history.push("/user-data");
   };
 
@@ -59,7 +59,7 @@ const Form = (): JSX.Element => {
           <FlexEndContainer>
             <ContinueButton
               disabled={
-                contributor?._helpType === "shelter" && !contributor.shelterID
+                contributor._helpType === "shelter" && !contributor.shelterID
               }
               onClick={handleContinue}
             >

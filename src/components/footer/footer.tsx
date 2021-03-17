@@ -15,7 +15,7 @@ const Footer = (): JSX.Element => {
   return (
     <div>
       <Line />
-      <Container>
+      <Container data-testid="footer">
         <Image src={Logo} />
         <Box>
           <Title>{t("title")}</Title>

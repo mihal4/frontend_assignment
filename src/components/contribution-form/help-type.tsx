@@ -26,7 +26,7 @@ const HelpType = (): JSX.Element => {
 
   return (
     <div>
-      {contributor?._helpType === Type.Shelter ? (
+      {contributor._helpType === Type.Shelter ? (
         <GroupContainer>
           <GroupShelter
             accessKey={contributor._helpType}
@@ -46,14 +46,14 @@ const HelpType = (): JSX.Element => {
       ) : (
         <GroupContainer>
           <GroupShelter
-            accessKey={contributor?._helpType}
+            accessKey={contributor._helpType}
             onClick={() => setHelpType("shelter")}
           >
             <img src={Wallet} />
             <GroupName>{t("shelterTitle")}</GroupName>
           </GroupShelter>
           <GroupFoundation
-            accessKey={contributor?._helpType}
+            accessKey={contributor._helpType}
             onClick={() => setHelpType("foundation")}
           >
             <img src={Wallet} />

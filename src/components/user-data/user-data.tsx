@@ -29,12 +29,7 @@ import {
   ButtonContinue,
   ButtonContinueText,
 } from "./user-data-styled-components";
-
-type IFlag = {
-  code: string;
-  name: string;
-  prefix: string;
-};
+import { IFlag } from "../../models/flag";
 
 const UserData = (): JSX.Element => {
   const { t } = useTranslation();
@@ -115,7 +110,7 @@ const UserData = (): JSX.Element => {
 
   const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(
-      contributor?.phone === ""
+      contributor.phone === ""
         ? choosedCountry.prefix + event.target.value
         : event.target.value
     );
@@ -181,7 +176,7 @@ const UserData = (): JSX.Element => {
             <Input
               type="text"
               maxLength={20}
-              value={contributor?.firstName}
+              value={contributor.firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder={t("namePlaceholder")}
             />
@@ -194,7 +189,7 @@ const UserData = (): JSX.Element => {
               type="text"
               minLength={2}
               maxLength={30}
-              value={contributor?.lastName}
+              value={contributor.lastName}
               onChange={handleChangeSurname}
               placeholder={t("surnamePlaceholder")}
             />
@@ -207,7 +202,7 @@ const UserData = (): JSX.Element => {
           <InputContainer>
             <Input
               type="text"
-              value={contributor?.email}
+              value={contributor.email}
               onChange={handleChangeEmail}
               placeholder={t("eMailPlaceholder")}
             />
@@ -229,7 +224,7 @@ const UserData = (): JSX.Element => {
             <Input
               type="text"
               maxLength={13}
-              value={contributor?.phone}
+              value={contributor.phone}
               onChange={handleChangePhone}
               placeholder={choosedCountry.prefix}
               style={{ paddingLeft: 60, paddingTop: 45 }}

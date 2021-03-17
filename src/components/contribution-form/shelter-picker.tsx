@@ -70,7 +70,7 @@ const ShelterPicker = (): JSX.Element => {
           <ChooseTitle>{t("shelterChooseTitle")}</ChooseTitle>
           <Info>
             {t(
-              contributor?._helpType === HelpType.Shelter
+              contributor._helpType === HelpType.Shelter
                 ? "mandatory"
                 : "optional"
             )}
@@ -80,7 +80,7 @@ const ShelterPicker = (): JSX.Element => {
           <div>
             <ChooseTitle>{t("shelter")}</ChooseTitle>
             <Placeholder>
-              {shelters && contributor?.shelterID
+              {shelters && contributor.shelterID
                 ? shelters[contributor.shelterID - 1].name
                 : t("chooseChelter")}
             </Placeholder>

@@ -6,7 +6,7 @@ import { Container, Step } from "./stepper-styled-components";
 
 const Stepper = (props: IStepper): JSX.Element => {
   return (
-    <Container>
+    <Container data-testid="stepper">
       <Step>
         <img src={props.currentStep === 1 ? ActiveStep : BasicStep} />
       </Step>

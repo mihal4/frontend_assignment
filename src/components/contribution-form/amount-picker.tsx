@@ -43,7 +43,7 @@ const AmountPicker = (): JSX.Element => {
 
   const amountBlock = amounts.map((amount) => (
     <div key={amount}>
-      {contributor?.value === amount ? (
+      {contributor.value === amount ? (
         <ActiveAmountBox onClick={() => handlePickAmount(amount)}>
           <ActiveAmountText>{amount} €</ActiveAmountText>
         </ActiveAmountBox>
@@ -60,7 +60,7 @@ const AmountPicker = (): JSX.Element => {
         <ChooseTitle>{t("amount")}</ChooseTitle>
         <AmountFlex>
           {amountBlock}
-          {contributor?.value === inputAmount ? (
+          {contributor.value === inputAmount ? (
             <ActiveAmountBox>
               <ActiveAmountText>
                 <ActiveInput

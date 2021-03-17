@@ -29,7 +29,7 @@ import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { IMessage } from "../../models/message";
 
 const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={4} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
 const Check = (): JSX.Element => {
@@ -96,21 +96,21 @@ const Check = (): JSX.Element => {
           <HeadTitle>{t("checkTitle")}</HeadTitle>
           <DataContainer>
             <Title>{t("foundationType")}</Title>
-            <Text>{t(contributor?._helpType + "Title")}</Text>
-            {contributor?.shelterID && (
+            <Text>{t(contributor._helpType + "Title")}</Text>
+            {contributor.shelterID && (
               <div>
                 <Title>{t("shelterType")}</Title>
-                <Text>{shelters[contributor?.shelterID - 1].name}</Text>
+                <Text>{shelters[contributor.shelterID - 1].name}</Text>
               </div>
             )}
             <Title>{t("amountHelp")}</Title>
-            <Text>{contributor?.value} €</Text>
+            <Text>{contributor.value} €</Text>
             <Title>{t("nameSurname")}</Title>
-            <Text>{contributor?.firstName + " " + contributor?.lastName}</Text>
+            <Text>{contributor.firstName + " " + contributor.lastName}</Text>
             <Title>{t("eMail")}</Title>
-            <Text>{contributor?.email}</Text>
+            <Text>{contributor.email}</Text>
             <Title>{t("number")}</Title>
-            <Text>{contributor?.phone}</Text>
+            <Text>{contributor.phone}</Text>
           </DataContainer>
           <AgreementContainer onClick={() => setChecked(!checked)}>
             <Checkbox>{checked && <Icon src={CheckboxIcon} />}</Checkbox>
