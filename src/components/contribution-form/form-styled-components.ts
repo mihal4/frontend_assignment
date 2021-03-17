@@ -5,7 +5,7 @@ const Container = styled.div`
   margin: 80px auto;
   padding: 0 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const InfoContainer = styled.div`
@@ -52,6 +52,7 @@ const Image = styled.img`
   max-height: 700px;
   object-fit: cover;
   border-radius: 50px;
+  margin-left: 40px;
 `;
 
 export {
