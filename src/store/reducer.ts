@@ -81,7 +81,7 @@ const reducer = (state = initialState, action: any): IState => {
         ...state,
         contributor: {
           ...state.contributor,
-          _helpType: action.phone,
+          _helpType: action.help,
         },
       };
     default:

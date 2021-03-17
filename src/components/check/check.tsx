@@ -37,12 +37,12 @@ const Check = (): JSX.Element => {
       (await fetch(`${API_URL}/shelters/contribute`, {
         method: "POST",
         body: JSON.stringify({
-          firstName: contributor?.firstName,
-          lastName: contributor?.lastName,
-          email: contributor?.email,
-          phone: contributor?.phone,
-          value: contributor?.value,
-          shelterID: contributor?.shelterID,
+          firstName: contributor.firstName,
+          lastName: contributor.lastName,
+          email: contributor.email,
+          phone: contributor.phone,
+          value: contributor.value,
+          shelterID: contributor.shelterID,
         }),
       })
         .then((response) => response.json())
