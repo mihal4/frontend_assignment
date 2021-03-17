@@ -1,12 +1,54 @@
 name: ESLint check
-on:
-  push
+on: push
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+      - name: Setup node
+        uses: actions/setup-node@main
+        with:
+          node-version: "12"
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn
+      - name: Run ESLint
+        run: yarn lint
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install modules
+      - name: Checkout Repo
+        uses: actions/checkout@main
+      - name: Setup node
+        uses: actions/setup-node@main
+        with:
+          node-version: "12"
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
         run: yarn
-      - name: Run ESLint
-        run: eslint . --ext .js,.jsx,.ts,.tsxhell
+      - name: Run Build
+        run: yarn build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+      - name: Setup node
+        uses: actions/setup-node@main
+        with:
+          node-version: "12"
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn
+      - name: Run Test
+        run: yarn test
