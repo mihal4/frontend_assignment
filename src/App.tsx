@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import Check from "./components/Check";
-import Form from "./components/form/Form";
-import UserData from "./components/UserData";
+import Check from "./components/check/check";
+import Form from "./components/form/form";
+import UserData from "./components/user-data/user-data";
 
 const Container = styled.div`
   background: white;
@@ -12,7 +12,7 @@ const Container = styled.div`
 const App = (): JSX.Element => {
   return (
     <Suspense fallback="loading">
-      <Container data-testid="app">
+      <Container>
         <Router>
           <Switch>
             <Route exact path="/">

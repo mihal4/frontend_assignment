@@ -1,8 +1,4 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import FbLogo from "./assets/fb.svg";
-import InstaLogo from "./assets/insta.svg";
 
 const Container = styled.div`
   width: 100%;
@@ -36,22 +32,4 @@ const Icon = styled.div`
   margin-right: 8px;
 `;
 
-const Navbar = (): JSX.Element => {
-  const { t } = useTranslation();
-
-  return (
-    <Container>
-      <CenteredView>
-        <Title>{t("title")}</Title>
-        <IconContainer>
-          <Icon>
-            <img src={FbLogo} />
-          </Icon>
-          <img src={InstaLogo} />
-        </IconContainer>
-      </CenteredView>
-    </Container>
-  );
-};
-
-export default Navbar;
+export { Container, CenteredView, Title, IconContainer, Icon };

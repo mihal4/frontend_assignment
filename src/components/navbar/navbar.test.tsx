@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import App from "./App";
+import Navbar from "./navbar";
 
 jest.mock("react-i18next", () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -16,7 +16,7 @@ jest.mock("react-i18next", () => ({
   },
 }));
 
-test("renders App successfully", () => {
-  const { queryByTestId } = render(<App />);
-  expect(queryByTestId("app")).toBeTruthy();
+test("renders Navbar successfully", () => {
+  const { queryByTestId } = render(<Navbar />);
+  expect(queryByTestId("navbar")).toBeTruthy();
 });

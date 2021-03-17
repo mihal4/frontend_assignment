@@ -1,4 +1,5 @@
-export const SET_SHELTER = "SET_SHELTER";
+export const SET_SHELTERS = "SET_SHELTERS";
+export const SET_SHELTER_ID = "SET_SHELTER_ID";
 export const SET_HELP_TYPE = "SET_HELP_TYPE";
 export const SET_VALUE = "SET_VALUE";
 export const SET_FIRST_NAME = "SET_FIRST_NAME";

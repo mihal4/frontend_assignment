@@ -1,89 +1,88 @@
+import { HelpType } from "../enums/helpType";
+import { Contributor } from "../models/contributor";
+import { Shelter } from "../models/shelter";
 import * as ActionTypes from "./actions";
 
 export type IState = {
-  form: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    value: number;
-    phone: string;
-    shelter: {
-      id: number | null;
-      name: string | null;
-    };
-  };
-  helpType: string;
+  shelters: Shelter[];
+  contributor: Contributor;
 };
 
 const initialState: IState = {
-  form: {
+  contributor: {
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     value: 50,
-    shelter: {
-      id: null,
-      name: null,
-    },
+    shelterID: undefined,
+    _helpType: HelpType.Foundation,
   },
-  helpType: "foundation",
+  shelters: [],
 };
 // eslint-disable-next-line
 const reducer = (state = initialState, action: any): IState => {
   switch (action.type) {
-    case ActionTypes.SET_SHELTER:
+    case ActionTypes.SET_SHELTERS:
       return {
         ...state,
-        form: {
-          ...state.form,
-          shelter: action.shelter,
+        shelters: action.shelters,
+      };
+    case ActionTypes.SET_SHELTER_ID:
+      return {
+        ...state,
+        contributor: {
+          ...state.contributor,
+          shelterID: action.shelterID,
         },
       };
     case ActionTypes.SET_VALUE:
       return {
         ...state,
-        form: {
-          ...state.form,
+        contributor: {
+          ...state.contributor,
           value: action.amount,
         },
       };
     case ActionTypes.SET_FIRST_NAME:
       return {
         ...state,
-        form: {
-          ...state.form,
+        contributor: {
+          ...state.contributor,
           firstName: action.firstName,
         },
       };
     case ActionTypes.SET_LAST_NAME:
       return {
         ...state,
-        form: {
-          ...state.form,
+        contributor: {
+          ...state.contributor,
           lastName: action.lastName,
         },
       };
     case ActionTypes.SET_EMAIL:
       return {
         ...state,
-        form: {
-          ...state.form,
+        contributor: {
+          ...state.contributor,
           email: action.email,
         },
       };
     case ActionTypes.SET_PHONE:
       return {
         ...state,
-        form: {
-          ...state.form,
+        contributor: {
+          ...state.contributor,
           phone: action.phone,
         },
       };
     case ActionTypes.SET_HELP_TYPE:
       return {
         ...state,
-        helpType: action.help,
+        contributor: {
+          ...state.contributor,
+          _helpType: action.phone,
+        },
       };
     default:
       return state;

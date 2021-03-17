@@ -1,80 +1,24 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { IState } from "../../store/reducer";
 import * as actionTypes from "../../store/actions";
-
-const AmountContainer = styled.div`
-  margin-top: 40px;
-`;
-
-const AmountFlex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 15px;
-`;
-
-const Input = styled.input`
-  width: 33px;
-  border: none;
-  border-bottom: 1px solid #c9c9c9;
-  outline: none;
-`;
-
-const ActiveInput = styled.input`
-  width: 33px;
-  border: none;
-  border-bottom: 1px solid #c9c9c9;
-  outline: none;
-  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-`;
-
-const ChooseTitle = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
-`;
-
-const AmountBox = styled.div`
-  height: 53px;
-  padding: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdfdf;
-  box-sizing: border-box;
-  border-radius: 8px;
-  margin-right: 7px;
-  margin-bottom: 7px;
-  cursor: pointer;
-`;
-
-const ActiveAmountBox = styled.div`
-  height: 53px;
-  padding: 16px;
-  background: linear-gradient(115.41deg, #cd8a64 -1.77%, #c4794f 73.03%);
-  border: 1px solid #dfdfdf;
-  box-sizing: border-box;
-  border-radius: 8px;
-  margin-right: 7px;
-  margin-bottom: 7px;
-  cursor: pointer;
-`;
-
-const ActiveAmountText = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
-  color: white;
-`;
+import {
+  ActiveAmountBox,
+  ActiveAmountText,
+  ActiveInput,
+  AmountBox,
+  AmountContainer,
+  AmountFlex,
+  ChooseTitle,
+  Input,
+} from "./amount-picker-styled-components";
 
 const AmountPicker = (): JSX.Element => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const form = useSelector((state: IState) => state.form);
+  const contributor = useSelector((state: IState) => state.contributor);
   const setValue = useCallback(
     (value: number) => dispatch({ type: actionTypes.SET_VALUE, amount: value }),
     [dispatch]
@@ -99,7 +43,7 @@ const AmountPicker = (): JSX.Element => {
 
   const amountBlock = amounts.map((amount) => (
     <div key={amount}>
-      {form.value === amount ? (
+      {contributor?.value === amount ? (
         <ActiveAmountBox onClick={() => handlePickAmount(amount)}>
           <ActiveAmountText>{amount} €</ActiveAmountText>
         </ActiveAmountBox>
@@ -116,7 +60,7 @@ const AmountPicker = (): JSX.Element => {
         <ChooseTitle>{t("amount")}</ChooseTitle>
         <AmountFlex>
           {amountBlock}
-          {form.value === inputAmount ? (
+          {contributor?.value === inputAmount ? (
             <ActiveAmountBox>
               <ActiveAmountText>
                 <ActiveInput
