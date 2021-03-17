@@ -40,14 +40,14 @@ const UserData = (): JSX.Element => {
   // eslint-disable-next-line
   const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
     useEffect(() => {
-      const handleClickOutside = (event: Event) => {
+      const clickOutside = (event: Event) => {
         if (ref.current && !ref.current.contains(event.target)) {
           setIsDropdownVisible(false);
         }
       };
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", clickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("mousedown", clickOutside);
       };
     }, [ref]);
   };
@@ -93,31 +93,31 @@ const UserData = (): JSX.Element => {
 
   const [choosedCountry, setChoosedCountry] = useState<IFlag>(flags[0]);
 
-  const handlePickCountry = (value: IFlag) => {
+  const pickCountry = (value: IFlag) => {
     setChoosedCountry(value);
     setIsDropdownVisible(false);
   };
 
-  const handleChangeSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSurname(event.target.value);
-    handleCheckSurname(event.target.value);
+    checkSurname(event.target.value);
   };
 
-  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
-    handleCheckEmail(event.target.value);
+    checkEmail(event.target.value);
   };
 
-  const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(
       contributor.phone === ""
         ? choosedCountry.prefix + event.target.value
         : event.target.value
     );
-    handleCheckPhone(event.target.value);
+    checkPhone(event.target.value);
   };
 
-  const handleCheckSurname = (value: string): boolean => {
+  const checkSurname = (value: string): boolean => {
     if (value.length > 1) {
       setSurnameAlert("");
       return true;
@@ -127,7 +127,7 @@ const UserData = (): JSX.Element => {
     }
   };
 
-  const handleCheckEmail = (value: string): boolean => {
+  const checkEmail = (value: string): boolean => {
     if (value.match(regexEmail)) {
       setEmailAlert("");
       return true;
@@ -137,7 +137,7 @@ const UserData = (): JSX.Element => {
     }
   };
 
-  const handleCheckPhone = (value: string): boolean => {
+  const checkPhone = (value: string): boolean => {
     if (value.length === 13) {
       setPhoneAlert("");
       return true;
@@ -147,18 +147,18 @@ const UserData = (): JSX.Element => {
     }
   };
 
-  const handleContinue = () => {
+  const next = () => {
     if (
-      handleCheckSurname(contributor.lastName) &&
-      handleCheckEmail(contributor.email) &&
-      handleCheckPhone(contributor.phone)
+      checkSurname(contributor.lastName) &&
+      checkEmail(contributor.email) &&
+      checkPhone(contributor.phone)
     ) {
       history.push("/check");
     }
   };
 
   const countries = flags.map((flag) => (
-    <DrowpdownRow key={flag.code} onClick={() => handlePickCountry(flag)}>
+    <DrowpdownRow key={flag.code} onClick={() => pickCountry(flag)}>
       <Flag code={flag.code} style={{ width: 23 }} />
       <InputText>{flag.name}</InputText>
     </DrowpdownRow>
@@ -190,7 +190,7 @@ const UserData = (): JSX.Element => {
               minLength={2}
               maxLength={30}
               value={contributor.lastName}
-              onChange={handleChangeSurname}
+              onChange={changeSurname}
               placeholder={t("surnamePlaceholder")}
             />
             <InputTitleContainer>
@@ -203,7 +203,7 @@ const UserData = (): JSX.Element => {
             <Input
               type="text"
               value={contributor.email}
-              onChange={handleChangeEmail}
+              onChange={changeEmail}
               placeholder={t("eMailPlaceholder")}
             />
             <InputTitleContainer>
@@ -225,7 +225,7 @@ const UserData = (): JSX.Element => {
               type="text"
               maxLength={13}
               value={contributor.phone}
-              onChange={handleChangePhone}
+              onChange={changePhone}
               placeholder={choosedCountry.prefix}
               style={{ paddingLeft: 60, paddingTop: 45 }}
             />
@@ -246,7 +246,7 @@ const UserData = (): JSX.Element => {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            <ButtonContinue onClick={handleContinue}>
+            <ButtonContinue onClick={next}>
               <ButtonContinueText>{t("continue")}</ButtonContinueText>
             </ButtonContinue>
           </ButtonsContainer>

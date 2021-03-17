@@ -41,7 +41,7 @@ const Check = (): JSX.Element => {
   const contributor = useSelector((state: IState) => state.contributor);
   const shelters = useSelector((state: IState) => state.shelters);
 
-  const handleSend = async () => {
+  const send = async () => {
     checked &&
       fetch(`${API_URL}/shelters/contribute`, {
         method: "POST",
@@ -128,7 +128,7 @@ const Check = (): JSX.Element => {
                 <ButtonBackText>{t("back")}</ButtonBackText>
               </ButtonBack>
             </Link>
-            <ButtonContinue onClick={handleSend} disabled={!checked}>
+            <ButtonContinue onClick={send} disabled={!checked}>
               <ButtonContinueText>{t("sendForm")}</ButtonContinueText>
             </ButtonContinue>
           </ButtonsContainer>

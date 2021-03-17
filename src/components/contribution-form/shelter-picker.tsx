@@ -38,27 +38,27 @@ const ShelterPicker = (): JSX.Element => {
   // eslint-disable-next-line
   const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
     useEffect(() => {
-      const handleClickOutside = (event: Event) => {
+      const clickOutside = (event: Event) => {
         if (ref.current && !ref.current.contains(event.target)) {
           setIsDropdownVisible(false);
         }
       };
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", clickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("mousedown", clickOutside);
       };
     }, [ref]);
   };
 
   useOutsideAlerter(wrapperRef);
 
-  const handlePickShelter = (value: Shelter) => () => {
+  const pickShelter = (value: Shelter) => () => {
     setShelterID(value.id);
     setIsDropdownVisible(false);
   };
 
   const sheltersDropdown = shelters.map((shelter: Shelter) => (
-    <DrowpdownRow key={shelter.id} onClick={handlePickShelter(shelter)}>
+    <DrowpdownRow key={shelter.id} onClick={pickShelter(shelter)}>
       {shelter.name}
     </DrowpdownRow>
   ));

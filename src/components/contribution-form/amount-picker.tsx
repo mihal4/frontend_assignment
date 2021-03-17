@@ -28,14 +28,12 @@ const AmountPicker = (): JSX.Element => {
 
   const [inputAmount, setInputAmount] = useState(0);
 
-  const handlePickAmount = (value: number) => {
+  const pickAmount = (value: number) => {
     setValue(value);
     setInputAmount(0);
   };
 
-  const handleInputChangeAmount = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const inputChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(event.target.value);
     setInputAmount(number);
     setValue(number);
@@ -44,11 +42,11 @@ const AmountPicker = (): JSX.Element => {
   const amountBlock = amounts.map((amount) => (
     <div key={amount}>
       {contributor.value === amount ? (
-        <ActiveAmountBox onClick={() => handlePickAmount(amount)}>
+        <ActiveAmountBox onClick={() => pickAmount(amount)}>
           <ActiveAmountText>{amount} €</ActiveAmountText>
         </ActiveAmountBox>
       ) : (
-        <AmountBox onClick={() => handlePickAmount(amount)}>
+        <AmountBox onClick={() => pickAmount(amount)}>
           <ChooseTitle>{amount} €</ChooseTitle>
         </AmountBox>
       )}
@@ -66,7 +64,7 @@ const AmountPicker = (): JSX.Element => {
                 <ActiveInput
                   type="number"
                   value={inputAmount === 0 ? "" : inputAmount}
-                  onChange={handleInputChangeAmount}
+                  onChange={inputChangeAmount}
                   autoFocus
                 />{" "}
                 €
@@ -78,7 +76,7 @@ const AmountPicker = (): JSX.Element => {
                 <Input
                   type="number"
                   value={inputAmount === 0 ? "" : inputAmount}
-                  onChange={handleInputChangeAmount}
+                  onChange={inputChangeAmount}
                 />{" "}
                 €
               </ChooseTitle>
