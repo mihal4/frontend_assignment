@@ -27,6 +27,9 @@ import {
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { IMessage } from "../../models/message";
+import Brady from "../assets/brady.png";
+import { Image } from "../contribution-form/form-styled-components";
+import { useWindowSize } from "../hooks/use-window-size";
 
 const Alert = (props: AlertProps) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -34,6 +37,8 @@ const Alert = (props: AlertProps) => {
 
 const Check = (): JSX.Element => {
   const { t } = useTranslation();
+  const size = useWindowSize();
+
   const [checked, setChecked] = useState(false);
   const [modalMessage, setModalMessage] = useState<IMessage[]>();
   const [isVisible, setIsVisible] = useState(false);
@@ -133,6 +138,7 @@ const Check = (): JSX.Element => {
             </ButtonContinue>
           </ButtonsContainer>
         </CheckContainer>
+        {size && size.width && size.width > 1050 && <Image src={Brady} />}
       </Container>
       <Footer />
     </div>

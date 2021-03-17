@@ -5,7 +5,7 @@ const Container = styled.div`
   margin: 80px auto;
   padding: 0 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 const InfoContainer = styled.div`
@@ -47,6 +47,13 @@ const ButtonText = styled.p`
   font-size: 14px;
 `;
 
+const Image = styled.img`
+  max-width: 364px;
+  max-height: 700px;
+  object-fit: cover;
+  border-radius: 50px;
+`;
+
 export {
   Container,
   InfoContainer,
@@ -54,4 +61,5 @@ export {
   FlexEndContainer,
   ContinueButton,
   ButtonText,
+  Image,
 };

@@ -30,10 +30,14 @@ import {
   ButtonContinueText,
 } from "./user-data-styled-components";
 import { IFlag } from "../../models/flag";
+import Brady from "../assets/brady.png";
+import { Image } from "../contribution-form/form-styled-components";
+import { useWindowSize } from "../hooks/use-window-size";
 
 const UserData = (): JSX.Element => {
   const { t } = useTranslation();
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const size = useWindowSize();
 
   const history = useHistory();
 
@@ -136,7 +140,7 @@ const UserData = (): JSX.Element => {
   };
 
   const checkPhone = (value: string): boolean => {
-    if (value.length === 13) {
+    if (value.length >= 13) {
       setPhoneAlert("");
       return true;
     } else {
@@ -248,6 +252,7 @@ const UserData = (): JSX.Element => {
             </ButtonContinue>
           </ButtonsContainer>
         </InfoContainer>
+        {size && size.width && size.width > 1050 && <Image src={Brady} />}
       </Container>
       <Footer />
     </div>

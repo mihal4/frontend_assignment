@@ -20,11 +20,15 @@ import {
 import { Shelter } from "../../models/shelter";
 import * as actionTypes from "../../store/actions";
 import { API_URL } from "../../config";
+import Brady from "../assets/brady.png";
+import { Image } from "./form-styled-components";
+import { useWindowSize } from "../hooks/use-window-size";
 
 const Form = (): JSX.Element => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const size = useWindowSize();
 
   const contributor = useSelector((state: IState) => state.contributor);
   const setShelters = useCallback(
@@ -67,6 +71,7 @@ const Form = (): JSX.Element => {
             </ContinueButton>
           </FlexEndContainer>
         </InfoContainer>
+        {size && size.width && size.width > 1050 && <Image src={Brady} />}
       </Container>
       <Footer />
     </div>

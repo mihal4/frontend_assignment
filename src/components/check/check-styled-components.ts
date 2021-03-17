@@ -5,7 +5,7 @@ const Container = styled.div`
   margin: 80px auto;
   padding: 0 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 const CheckContainer = styled.div`
