@@ -1,11 +1,8 @@
 import React from "react";
+import { IStepper } from "../../models/stepper";
 import ActiveStep from ".././assets/active.svg";
 import BasicStep from ".././assets/step.svg";
 import { Container, Step } from "./stepper-styled-components";
-
-type IStepper = {
-  currentStep: number;
-};
 
 const Stepper = (props: IStepper): JSX.Element => {
   return (

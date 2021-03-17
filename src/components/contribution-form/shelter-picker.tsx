@@ -5,7 +5,6 @@ import { IState } from "../../store/reducer";
 import * as actionTypes from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import DropdownIcon from "../assets/dropdown.svg";
-import { API_URL } from "../../config";
 import { HelpType } from "../../enums/helpType";
 import {
   ChooseTitle,
@@ -25,12 +24,6 @@ const ShelterPicker = (): JSX.Element => {
 
   const contributor = useSelector((state: IState) => state.contributor);
   const shelters = useSelector((state: IState) => state.shelters);
-
-  const setShelters = useCallback(
-    (value: Shelter[]) =>
-      dispatch({ type: actionTypes.SET_SHELTERS, shelters: value }),
-    [dispatch]
-  );
 
   const setShelterID = useCallback(
     (value: number) =>
@@ -58,18 +51,6 @@ const ShelterPicker = (): JSX.Element => {
   };
 
   useOutsideAlerter(wrapperRef);
-
-  useEffect(() => {
-    isDropdownVisible && handleFetchShelters();
-  }, [isDropdownVisible]);
-
-  const handleFetchShelters = () => () => {
-    fetch(`${API_URL}/shelters`)
-      .then((response) => response.json())
-      .then((data) => {
-        setShelters(data.shelters);
-      });
-  };
 
   const handlePickShelter = (value: Shelter) => () => {
     setShelterID(value.id);
