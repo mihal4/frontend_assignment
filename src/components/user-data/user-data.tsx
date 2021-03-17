@@ -33,15 +33,14 @@ import { IFlag } from "../../models/flag";
 
 const UserData = (): JSX.Element => {
   const { t } = useTranslation();
-  const wrapperRef = useRef(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const history = useHistory();
 
-  // eslint-disable-next-line
-  const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
+  const useOutsideAlerter = (ref: React.RefObject<HTMLDivElement>) => {
     useEffect(() => {
-      const clickOutside = (event: Event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+      const clickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
           setIsDropdownVisible(false);
         }
       };
@@ -88,8 +87,7 @@ const UserData = (): JSX.Element => {
     { code: "cz", name: "Česká republika", prefix: "+420" },
   ];
 
-  // eslint-disable-next-line
-  const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const [choosedCountry, setChoosedCountry] = useState<IFlag>(flags[0]);
 
@@ -223,7 +221,6 @@ const UserData = (): JSX.Element => {
             )}
             <Input
               type="text"
-              maxLength={13}
               value={contributor.phone}
               onChange={changePhone}
               placeholder={choosedCountry.prefix}

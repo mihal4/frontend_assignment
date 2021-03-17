@@ -20,8 +20,10 @@ const initialState: IState = {
   },
   shelters: [],
 };
-// eslint-disable-next-line
-const reducer = (state = initialState, action: any): IState => {
+const reducer = (
+  state = initialState,
+  action: ActionTypes.ContributionActionTypes
+): IState => {
   switch (action.type) {
     case ActionTypes.SET_SHELTERS:
       return {

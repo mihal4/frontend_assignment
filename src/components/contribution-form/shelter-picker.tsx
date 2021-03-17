@@ -33,13 +33,12 @@ const ShelterPicker = (): JSX.Element => {
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  const wrapperRef = useRef(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // eslint-disable-next-line
-  const useOutsideAlerter = (ref: React.MutableRefObject<any>) => {
+  const useOutsideAlerter = (ref: React.RefObject<HTMLDivElement>) => {
     useEffect(() => {
-      const clickOutside = (event: Event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+      const clickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
           setIsDropdownVisible(false);
         }
       };
