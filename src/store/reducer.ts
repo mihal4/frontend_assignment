@@ -20,6 +20,7 @@ const initialState: IState = {
   },
   shelters: [],
 };
+
 const reducer = (
   state = initialState,
   action: ActionTypes.ContributionActionTypes

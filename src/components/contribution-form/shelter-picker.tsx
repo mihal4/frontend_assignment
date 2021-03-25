@@ -56,11 +56,13 @@ const ShelterPicker = (): JSX.Element => {
     setIsDropdownVisible(false);
   };
 
-  const sheltersDropdown = shelters.map((shelter: Shelter) => (
-    <DrowpdownRow key={shelter.id} onClick={pickShelter(shelter)}>
-      {shelter.name}
-    </DrowpdownRow>
-  ));
+  const sheltersDropdown =
+    shelters.length > 0 &&
+    shelters.map((shelter: Shelter) => (
+      <DrowpdownRow key={shelter.id} onClick={pickShelter(shelter)}>
+        {shelter.name}
+      </DrowpdownRow>
+    ));
 
   return (
     <div>
