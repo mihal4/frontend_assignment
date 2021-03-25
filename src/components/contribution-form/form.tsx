@@ -17,32 +17,22 @@ import {
   InfoContainer,
   Title,
 } from "./form-styled-components";
-import { Shelter } from "../../models/shelter";
-import * as actionTypes from "../../store/actions";
-import { API_URL } from "../../config";
 import Brady from "../assets/brady.png";
 import { Image } from "./form-styled-components";
 import { useWindowSize } from "../hooks/use-window-size";
+import { fetchShelters } from "../../store/shelters-action";
 
 const Form = (): JSX.Element => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
   const size = useWindowSize();
+  const dispatch = useDispatch();
 
   const contributor = useSelector((state: IState) => state.contributor);
-  const setShelters = useCallback(
-    (value: Shelter[]) =>
-      dispatch({ type: actionTypes.SET_SHELTERS, shelters: value }),
-    [dispatch]
-  );
+  const getShelters = useCallback(() => dispatch(fetchShelters()), [dispatch]);
 
   useEffect(() => {
-    fetch(`${API_URL}/shelters`)
-      .then((response) => response.json())
-      .then((data) => {
-        setShelters(data.shelters);
-      });
+    getShelters();
   }, []);
 
   const next = () => {
